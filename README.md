@@ -1,6 +1,9 @@
 # Arcus Instant Close Market Maker Script
 
-Trading bot for [Arcus](https://app.arcus.xyz/ref/HL) perpetuals
+Trading bot for [Arcus](https://app.arcus.xyz/ref/HL) perpetuals where this bot will help you generate volume quickly . This bot will open order as maker and closes as taker which will help you in generating volume quickly
+NFA : I was able generate 1M volume on Arcus in 180$. Results may vary depending on situation and market volatility.
+
+This bot is only for test purpose , you can use it or make it more advanced using your skills
 
 It quotes **ALO (post-only) at the best bid and best ask**. When a maker fill opens inventory, it immediately cancels the opposite quote and sends an **IOC reduce-only close**. After the account is flat it quotes both sides again.
 
