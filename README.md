@@ -60,8 +60,8 @@ ALO skips Arcus’s 50 ms taker speed bump. The flatten leg is a taker order, so
 ## Local / first run
 
 ```bash
-git clone <your-repo>
-cd <your-repo>
+git clone https://github.com/ibuyshite/arcus.git
+cd arcus
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -136,8 +136,8 @@ sudo su - arcus
 ### 2. Code and venv
 
 ```bash
-git clone <your-repo> ~/arcus-mm
-cd ~/arcus-mm
+git clone https://github.com/ibuyshite/arcus.git
+cd arcus
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -U pip
@@ -152,57 +152,14 @@ Fill keys. First boot with `DRY_RUN=true`.
 ### 3. Smoke test
 
 ```bash
-source ~/arcus-mm/.venv/bin/activate
-cd ~/arcus-mm
+source ~/arcus/.venv/bin/activate
+cd ~/arcus
 python main.py
 ```
 
-Ctrl+C after you see BBO dry-run quotes. Then set `DRY_RUN=false` if you are ready to send live ALO orders.
+Ctrl+C after you see BBO dry-run quotes. Then set `DRY_RUN=false` if you are ready to send live ALO orders
 
-### 4. systemd (keeps it up after reboot / crash)
-
-```bash
-sudo tee /etc/systemd/system/arcus-mm.service >/dev/null <<'EOF'
-[Unit]
-Description=Arcus instant-close market maker
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-User=arcus
-WorkingDirectory=/home/arcus/arcus-mm
-Environment=PYTHONUNBUFFERED=1
-ExecStart=/home/arcus/arcus-mm/.venv/bin/python /home/arcus/arcus-mm/main.py
-Restart=always
-RestartSec=5
-LimitNOFILE=65535
-
-# Hardening
-NoNewPrivileges=true
-PrivateTmp=true
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl daemon-reload
-sudo systemctl enable --now arcus-mm
-sudo systemctl status arcus-mm
-sudo journalctl -u arcus-mm -f
-```
-
-Useful commands:
-
-```bash
-sudo systemctl stop arcus-mm
-sudo systemctl restart arcus-mm
-sudo journalctl -u arcus-mm -n 200 --no-pager
-```
-
-On stop/restart the process sends cancel-all and tries to flatten. If it is killed hard (`kill -9`, host crash), resting ALO orders stay on the book until **DMS** fires (`DMS_LEAD_SECONDS`). Keep those values tight.
-
-### 5. Optional: tmux instead of systemd
+### 4. Optional: tmux instead of systemd
 
 ```bash
 sudo apt install -y tmux
@@ -211,8 +168,6 @@ cd ~/arcus-mm && source .venv/bin/activate && python main.py
 # detach: Ctrl+b then d
 # reattach: tmux attach -t arcus
 ```
-
-systemd is better on a VPS.
 
 ## Safety
 
