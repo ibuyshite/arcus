@@ -1,10 +1,10 @@
-# Arcus Instant-Close Market Maker
+# Arcus Instant Close Market Maker Script
 
-Mainnet-only trading bot for [Arcus](https://arcus.xyz) perpetuals.
+Trading bot for [Arcus](https://app.arcus.xyz/ref/HL) perpetuals
 
 It quotes **ALO (post-only) at the best bid and best ask**. When a maker fill opens inventory, it immediately cancels the opposite quote and sends an **IOC reduce-only close**. After the account is flat it quotes both sides again.
 
-This repo talks only to Arcus **mainnet**:
+This repo trades only on Arcus **mainnet**:
 
 - REST `https://api.arcus.xyz`
 - WebSocket `wss://api.arcus.xyz/v1/ws`
@@ -53,20 +53,9 @@ ALO skips Arcus’s 50 ms taker speed bump. The flatten leg is a taker order, so
 
 ## Create an API key
 
-1. Open the Arcus mainnet app and deposit collateral.
-2. Generate an Ed25519 keypair locally (server stores only the public half):
-
-```bash
-python3 - <<'PY'
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
-priv = Ed25519PrivateKey.generate()
-print("ARCUS_API_SECRET=" + priv.private_bytes_raw().hex())
-print("ARCUS_API_KEY=" + priv.public_key().public_bytes_raw().hex())
-PY
-```
-
-3. Register that public key against your wallet with `POST /v1/createApiKey` (EIP-712 signature from the wallet). The app’s API-keys page does this for you.
-4. Copy the wallet address, public key, and private key into `.env`. Never commit `.env`.
+1. Open the Arcus and deposit collateral
+2. Generate API Key & Save it.
+4. Copy the wallet address, public key, and private key into `.env`
 
 ## Local / first run
 
