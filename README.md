@@ -19,7 +19,7 @@ Testnet URLs are rejected on startup.
 ```
 .
 ├── main.py                 # start here
-├── .env.example
+├── .env
 ├── requirements.txt
 └── arcus_mm_bot/           # library (do not run files in here)
     ├── book.py
@@ -68,7 +68,6 @@ cd arcus
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
 nano .env          # fill ARCUS_ADDRESS, ARCUS_API_KEY, ARCUS_API_SECRET
 ```
 
@@ -145,8 +144,6 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -U pip
 pip install -r requirements.txt
-cp .env.example .env
-chmod 600 .env
 nano .env
 ```
 
