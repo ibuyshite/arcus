@@ -167,7 +167,7 @@ Ctrl+C after you see BBO dry-run quotes. Then set `DRY_RUN=false` if you are rea
 ```bash
 sudo apt install -y tmux
 tmux new -s arcus
-cd ~/arcus-mm && source .venv/bin/activate && python main.py
+cd ~/arcus && source .venv/bin/activate && python main.py
 # detach: Ctrl+b then d
 # reattach: tmux attach -t arcus
 ```
